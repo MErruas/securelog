@@ -6,9 +6,5 @@ This database is designed to store information about incident data with a dashbo
 The Security Problem: Cyber attacks are becoming more common and sophisticated and companies, organizations, and even individuals are struggling to deal with threats and notice vulnerabilities in their systems.
 
 
-In 2024, there were significant increases in cyberattacks and their costs
-In Q3 it has been a 75% increase in loses reported by the FBI and a $16 Billion which was a 54% increase from the previous year in 2023
-<img width="2151" height="126" alt="image" src="https://github.com/user-attachments/assets/2fc61b3c-d1d0-4dfb-b0b5-98a894009aca" />
-
-
-<img width="4695" height="123" alt="image" src="https://github.com/user-attachments/assets/d496a354-fbc8-4918-a468-5f15a174a365" />
+In 2024, there were significant increases in cyberattacks and their costs.
+In Q3 it has been a 75% increase in loses reported by the FBI and a $16 Billion which was a 54% increase from the previous year in 2023.
