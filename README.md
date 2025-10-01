@@ -14,3 +14,6 @@ In Q3 it has been a 75% increase in loses reported by the FBI and a $16 Billion 
 
 <img width="965" height="871" alt="image" src="https://github.com/user-attachments/assets/f49bb0b7-a445-466b-a3e6-91527ebd977b" />
 
+
+
+Use Server > Data Import in MySQL Workbench to import schema
