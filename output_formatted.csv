@@ -1,0 +1,6 @@
+Country  Year       Attack Type    Target Industry  Financial Loss (in Million $)  Number of Affected Users Attack Source Security Vulnerability Type Defense Mechanism Used  Incident Resolution Time (in Hours)
+  China  2019          Phishing          Education                          80.53                    773169  Hacker Group          Unpatched Software                    VPN                                   63
+  China  2019        Ransomware             Retail                          62.19                    295961  Hacker Group          Unpatched Software               Firewall                                   71
+  India  2017 Man-in-the-Middle                 IT                          38.65                    605895  Hacker Group              Weak Passwords                    VPN                                   20
+     UK  2024        Ransomware Telecommunications                          41.44                    659320  Nation-state          Social Engineering     AI-based Detection                                    7
+Germany  2018 Man-in-the-Middle                 IT                          74.41                    810682       Insider          Social Engineering                    VPN                                   68
