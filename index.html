@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Incident Tracker Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Flatpickr - for the date picker -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css">
+
+  <!-- Chart.js - for making the charts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <!-- jsVectorMap - for the world map -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/css/jsvectormap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/js/jsvectormap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/maps/world-merc.js"></script>
+
+  <!-- My styles -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="wrap">
+    
+    <!-- Title at the top -->
+    <header>
+      <h1 class="page-title"><span class="title-glow">Incident Tracker Dashboard</span></h1>
+    </header>
+
+    <!-- Filter section - where users can filter the data -->
+    <section class="card section">
+      <div class="filters">
+        
+        <!-- Date range picker -->
+        <div class="filter-control">
+          <label for="dateRange" class="subtitle">Date range</label>
+          <div class="date-wrapper">
+            <input id="dateRange" class="input" placeholder="Select date range" readonly />
+            <button id="dateApply" class="btn-apply" title="Apply dates">See Results</button>
+            <button id="dateClear" class="btn-clear" title="Clear dates">×</button>
+          </div>
+        </div>
+
+        <!-- Dropdown to select incident type -->
+        <div class="filter-control">
+          <label for="incidentType" class="subtitle">Incident Type</label>
+          <select id="incidentType" class="input type-select">
+            <option value="all" selected>All Types</option>
+            <option value="Phishing">Phishing</option>
+            <option value="Malware">Malware</option>
+            <option value="DDoS">DDoS</option>
+            <option value="Ransomware">Ransomware</option>
+            <option value="Insider">Insider Threat</option>
+          </select>
+        </div>
+
+        <!-- Radio buttons for severity levels -->
+        <div class="filter-control">
+          <span class="subtitle">Severity</span>
+          <div id="severityRadios" class="sev-group" role="radiogroup" aria-label="Severity">
+            <label class="sev-pill" data-sev="all">
+              <input type="radio" name="severity" value="all" checked><span>All</span>
+            </label>
+            <label class="sev-pill" data-sev="Critical">
+              <input type="radio" name="severity" value="Critical"><span>Critical</span>
+            </label>
+            <label class="sev-pill" data-sev="High">
+              <input type="radio" name="severity" value="High"><span>High</span>
+            </label>
+            <label class="sev-pill" data-sev="Medium">
+              <input type="radio" name="severity" value="Medium"><span>Medium</span>
+            </label>
+            <label class="sev-pill" data-sev="Low">
+              <input type="radio" name="severity" value="Low"><span>Low</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Reset button to clear all filters -->
+        <div class="filter-control">
+          <label class="subtitle">&nbsp;</label>
+          <button id="resetBtn" class="btn">Reset filters</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main grid - map on left, charts on right -->
+    <div class="grid">
+      
+      <!-- World map section -->
+      <section class="card section">
+        <div class="panel-title-row">
+          <h3 class="panel-title">Incidents by Location</h3>
+          <button id="resetView" class="map-btn-outside" title="Reset view">Reset view</button>
+        </div>
+
+        <!-- The map has a flip effect - front shows map, back shows details -->
+        <div id="mapFlip" class="flip">
+          <!-- Front side - the actual map -->
+          <div class="face front">
+            <div id="map"></div>
+          </div>
+
+          <!-- Back side - shows when you click on a marker or country -->
+          <div class="face back">
+            <button id="detailClose" class="detail-close" aria-label="Close details">×</button>
+            <div id="detailPanel"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Charts column on the right -->
+      <div class="charts">
+        
+        <!-- Chart 1: Line chart showing incidents over time -->
+        <section class="card chart-card">
+          <h3 class="panel-title">Incidents Over Time</h3>
+          <div class="chart-container"><canvas id="chartTime"></canvas></div>
+          <div class="chart-total" id="chartTimeTotal">Total: 0</div>
+        </section>
+
+        <!-- Chart 2: Bar chart showing different incident types -->
+        <section class="card chart-card">
+          <h3 class="panel-title">Incident Types</h3>
+          <div class="chart-container"><canvas id="chartTypes"></canvas></div>
+        </section>
+
+        <!-- Chart 3: Doughnut chart showing severity breakdown -->
+        <section class="card chart-card">
+          <h3 class="panel-title">Incidents by Severity</h3>
+          <div class="chart-container"><canvas id="chartSeverity"></canvas></div>
+        </section>
+      </div>
+    </div>
+
+    <!-- Data table at the bottom -->
+    <section class="card section" style="margin-top:12px;">
+      <h3 class="panel-title centered-title">Recent Incidents</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Type</th>
+            <th>Severity</th>
+            <th>Organization</th>
+            <th>Country</th>
+            <th>Response Time</th>
+            <th>Data Breached</th>
+            <th>Mitigation Strategy</th>
+            <th>Affected Industry</th>
+            <th>Financial Impact</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </section>
+  </div>
+
+  <!-- Load the libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  
+  <!-- My JavaScript code -->
+  <script src="main.js"></script>
+</body>
+</html>
