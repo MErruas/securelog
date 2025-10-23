@@ -18,11 +18,12 @@ In Q3 it has been a 75% increase in loses reported by the FBI and a $16 Billion 
 
 Schema:
 Attached is a sql script to build the schema. Run this code in mysql workbench
+basic_database_creation.sql
 
 Server file:
 Working on implementing database.js which has started implementing functions that will be interacting with the frontend and backend. 
-To run server.js:
-node server.js and it will connect to the database if the details in the create connection are accurate.
+To run server.js: node server.js 
+It will connect to the database if the details in the create connection are accurate. Doesn't currently connect to frontend.
 
 To run the website:
 1. Navigate to main folder containing index.html, style.css, main.js
