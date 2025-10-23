@@ -1,0 +1,62 @@
+
+#1. 
+CREATE DATABASE PROJECT;
+
+#DROP DATABASE PROJECT;
+show databases;
+
+
+#3.
+USE PROJECT;
+
+#4. SHOW TABLES;
+#5. CREATE A TABLE
+
+CREATE TABLE MEMBERS
+(
+	MemberID		INT	NOT NULL,
+	LastName		VARCHAR(15),
+	FirstName		VARCHAR(15)	NOT NULL,
+	CompanyID			INT	NOT NULL,
+	PRIMARY KEY(MemberID),
+	FOREIGN KEY(CompanyID) REFERENCES COMPANY(CompanyID)
+);
+
+CREATE TABLE ASSET
+(
+	AssetID		INT	NOT NULL,
+	AssetName		VARCHAR(15),
+	AssetType		VARCHAR(15)	NOT NULL,
+	IP			VARCHAR(15)	NOT NULL,
+    AssetOwner		VARCHAR(15)	NOT NULL,
+	PRIMARY KEY(AssetID),
+	FOREIGN KEY(AssetOwner) REFERENCES MEMBERS(MemberID)
+);
+
+CREATE TABLE INCIDENT
+(
+	IncidentID		INT	NOT NULL,
+    CompanyID INT NOT NULL,
+	Country		VARCHAR(15),
+	Year		INT	NOT NULL,
+	ThreatType			VARCHAR(15)	NOT NULL,
+    AffectedIndustry​		VARCHAR(15)	NOT NULL,
+    DataBreached INT,#In GB
+    FinancialImpact INT, #In M
+    SeverityLevel​  VARCHAR(15),
+    ResponseTime INT,
+    MitigationStrategy VARCHAR(15),
+    Company VARCHAR(15),
+	PRIMARY KEY(IncidentID),
+	FOREIGN KEY(CompanyID) REFERENCES COMPANY(CompanyID)
+);
+
+CREATE TABLE COMPANY
+(
+	CompanyID		INT	NOT NULL,
+	CompanyName		VARCHAR(15),
+	PRIMARY KEY(CompanyID)
+);
+#6. SHOW TABLES
+SHOW TABLES;
+
