@@ -16,4 +16,13 @@ In Q3 it has been a 75% increase in loses reported by the FBI and a $16 Billion 
 
 
 
-Use Server > Data Import in MySQL Workbench to import schema
+Schema:
+Attached is a sql script to build the schema. Run this code in mysql workbench
+
+Server file:
+
+
+To run the website:
+1. Navigate to main folder containing index.html, style.css, main.js
+2. Run the command to start the server on an open port: python3 -m http.server 8000
+3. Open browser and navigate to: http://localhost:8000
