@@ -1,9 +1,13 @@
+import express from 'express'
 import mysql from 'mysql2'
 
+const app = express()
+app.use(express.json())
+
 const pool = mysql.createPool({
-    host: '127.0.0.1',
+    host: 'localhost',
     user: 'root',
-    password: '.....',
+    password: '',
     database: 'project'
 })
 
