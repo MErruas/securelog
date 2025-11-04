@@ -30,6 +30,7 @@ To run the website:
 2. Run the command to start the server on an open port: python3 -m http.server 8000
 3. Open browser and navigate to: http://localhost:8000
 
+To run the database:
 4. Install dependencies: npm install express mysql2 cors
 5. Open second terminal
 6. Run server command: node database.js
