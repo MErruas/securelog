@@ -6,7 +6,7 @@ SAMPLE DATA
 ============================================
 This is just placeholder data to test the dashboard. Later we will connect to the actual database using Node.js
 */
-
+/*
 const incidents = [
   { id: 1,  date: "2024-08-28", type: "Phishing",   severity: "High",     org: "Organization-A", country: "US", lat: 37.7749,  lng: -122.4194, responseTime: "2 hours",    dataBreached: "5,000 records",    mitigationStrategy: "Password reset & 2FA",   affectedIndustry: "Healthcare",    financialImpact: "$50,000" },
   { id: 2,  date: "2024-09-02", type: "Malware",    severity: "Medium",   org: "Organization-B", country: "CA", lat: 43.6532,  lng: -79.3832,  responseTime: "4 hours",    dataBreached: "None",             mitigationStrategy: "System quarantine",      affectedIndustry: "Finance",       financialImpact: "$25,000" },
@@ -20,7 +20,7 @@ const incidents = [
   { id: 10, date: "2024-09-27", type: "Phishing",   severity: "Low",      org: "Organization-J", country: "US", lat: 34.0522,  lng: -118.2437, responseTime: "8 hours",    dataBreached: "50 records",       mitigationStrategy: "Security awareness",    affectedIndustry: "Government",    financialImpact: "$8,000" },
   { id: 11, date: "2024-09-29", type: "DDoS",       severity: "High",     org: "Organization-K", country: "FR", lat: 48.8566,  lng: 2.3522,    responseTime: "45 minutes", dataBreached: "N/A",              mitigationStrategy: "CDN activation",        affectedIndustry: "Media",         financialImpact: "$100,000" },
   { id: 12, date: "2024-10-01", type: "Ransomware", severity: "Critical", org: "Organization-L", country: "AU", lat: -33.8688, lng: 151.2093,  responseTime: "2 hours",    dataBreached: "100,000 records",  mitigationStrategy: "Backup recovery",       affectedIndustry: "Energy",        financialImpact: "$1,000,000" }
-];
+]; */
 
 // Country codes to full names
 const countryNames = {
@@ -28,11 +28,13 @@ const countryNames = {
   AU: "Australia",
   BR: "Brazil",
   CA: "Canada",
+  CN: "China",
   DE: "Germany",
   FR: "France",
   GB: "United Kingdom",
   IN: "India",
   JP: "Japan",
+  RU: "Russia",
   US: "United States"
 };
 
@@ -42,6 +44,20 @@ HELPER FUNCTIONS
 ============================================
 */
 
+async function fetchIncidents() {
+  try {
+    const response = await fetch('http://localhost:3000/incidents');
+    if(!response.ok) {
+      throw new Error('HTTP error! status: ${response.status}');
+    }
+
+    const incidents = await response.json();
+    return incidents;
+  } catch (error) {
+    console.error("Could not fetch incidents:" , error);
+    return [];
+  }
+}
 // Convert date string to Date object
 function parseISO(d) {
   const [y, m, day] = d.split("-").map(Number);
@@ -126,7 +142,7 @@ function readFilters() {
 }
 
 // Filter the data based on current settings
-function filterData() {
+function filterData(incidents) {
   const { severity, incidentType, start, end } = readFilters();
   return incidents.filter(it => {
     const d = parseISO(it.date);
@@ -441,8 +457,10 @@ REFRESH FUNCTION
 */
 
 // Refresh everything when filters change
-function refresh() {
-  const rows = filterData();
+async function refresh() {
+  const incidents = await fetchIncidents();
+
+  const rows = filterData(incidents);
   updateTable(rows);
   updateCharts(rows);
   renderMap(rows);
@@ -468,7 +486,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('dateClear').style.display = 'block';
       }
     }
-  });
+});
 
   // Apply button - when user clicks "See Results"
   document.getElementById('dateApply').addEventListener('click', () => {

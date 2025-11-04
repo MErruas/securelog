@@ -24,11 +24,11 @@ CREATE TABLE MEMBERS
 
 CREATE TABLE ASSET
 (
-	AssetID		INT	NOT NULL,
-	AssetName		VARCHAR(15),
-	AssetType		VARCHAR(15)	NOT NULL,
-	IP			VARCHAR(15)	NOT NULL,
-    AssetOwner		VARCHAR(15)	NOT NULL,
+	AssetID     INT NOT NULL,
+	AssetName   VARCHAR(15),
+	AssetType   VARCHAR(15) NOT NULL,
+	IP          VARCHAR(15) NOT NULL,
+	AssetOwner  INT NOT NULL,
 	PRIMARY KEY(AssetID),
 	FOREIGN KEY(AssetOwner) REFERENCES MEMBERS(MemberID)
 );
@@ -36,19 +36,20 @@ CREATE TABLE ASSET
 CREATE TABLE INCIDENT
 (
 	IncidentID		INT	NOT NULL,
-    CompanyID INT NOT NULL,
+    CompanyID INT NULL,
 	Country		VARCHAR(15),
-	Year		INT	NOT NULL,
-	ThreatType			VARCHAR(15)	NOT NULL,
-    AffectedIndustry​		VARCHAR(15)	NOT NULL,
-    DataBreached INT,#In GB
-    FinancialImpact INT, #In M
-    SeverityLevel​  VARCHAR(15),
-    ResponseTime INT,
-    MitigationStrategy VARCHAR(15),
+	Year		VARCHAR(20),
+	ThreatType			VARCHAR(30)	NOT NULL,
+    AffectedIndustry		VARCHAR(30)	NOT NULL,
+    DataBreached VARCHAR(15),#In GB
+    FinancialImpact VARCHAR(20), #In M
+    SeverityLevel  VARCHAR(15),
+    ResponseTime VARCHAR(15),
+    MitigationStrategy VARCHAR(30),
     Company VARCHAR(15),
-	PRIMARY KEY(IncidentID),
-	FOREIGN KEY(CompanyID) REFERENCES COMPANY(CompanyID)
+	Lat DECIMAL(9,6),
+	Lng DECIMAL(9,6),
+	PRIMARY KEY(IncidentID)
 );
 
 CREATE TABLE COMPANY
@@ -60,3 +61,4 @@ CREATE TABLE COMPANY
 #6. SHOW TABLES
 SHOW TABLES;
 
+DROP TABLE INCIDENT;
