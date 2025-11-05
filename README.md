@@ -36,4 +36,4 @@ To run the database:
 3. Run server command: node database.js
 
 Inserting data:
-As of now, the data has to be manually imported from the csv file into the incidents table in MySQL Workbench.
+As of now, the data has to be manually imported from "NewGlobal_Cybersecurity_Threats_2015-2024.csv" file into the incidents table in MySQL Workbench.
