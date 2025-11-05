@@ -31,6 +31,9 @@ To run the website:
 3. Open browser and navigate to: http://localhost:8000
 
 To run the database:
-1. Install dependencies: npm install express mysql2 cors
-2. Open second terminal
+1. Open second terminal and navigate to main folder
+2. Install dependencies: npm install express mysql2 cors
 3. Run server command: node database.js
+
+Inserting data:
+As of now, the data has to be manually imported from the csv file into the incidents table in MySQL Workbench.
