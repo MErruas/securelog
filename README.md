@@ -31,6 +31,6 @@ To run the website:
 3. Open browser and navigate to: http://localhost:8000
 
 To run the database:
-4. Install dependencies: npm install express mysql2 cors
-5. Open second terminal
-6. Run server command: node database.js
+1. Install dependencies: npm install express mysql2 cors
+2. Open second terminal
+3. Run server command: node database.js
