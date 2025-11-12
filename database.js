@@ -9,7 +9,7 @@ app.use(express.json())
 const pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
-    password: 'password',
+    password: '',
     database: 'project'
 }).promise()
 
@@ -18,6 +18,7 @@ app.listen(3000, () => console.log('Server running on port 3000'))
 
 // view all incidents
 app.get('/incidents', async (req, res) => {
+    const { severity, incidentType, start, end } = req.query;
     const sql = `
         SELECT 
             IncidentID AS id,
@@ -35,8 +36,28 @@ app.get('/incidents', async (req, res) => {
             Lng AS lng
         FROM INCIDENT
     `
+    // Dynamically build WHERE clause
+    let whereClauses = [];
+    let params = [];
+
+    if (severity && severity !== 'all') {
+        whereClauses.push('SeverityLevel = ?');
+        params.push(severity);
+    }
+    if (incidentType && incidentType !== 'all') {
+        whereClauses.push('ThreatType = ?');
+        params.push(incidentType);
+    }
+    if (start) { whereClauses.push('Year >= ?'); params.push(start); }
+    if (end) { whereClauses.push('Year <= ?'); params.push(end); }
+
+    // Add the ORDER BY and LIMIT clauses
+    const finalSql = sql +
+        (whereClauses.length > 0 ? ` WHERE ${whereClauses.join(' AND ')}` : '') +
+        ` ORDER BY Year DESC LIMIT 100`;
+
     try {
-        const [results] = await pool.query(sql);
+        const [results] = await pool.query(finalSql, params);
         res.json(results);
     } catch (err) {
         console.error("Database query error:", err);
@@ -57,7 +78,7 @@ app.post('/incidents', async (req, res) => {
                 AffectedIndustry, DataBreached, FinancialImpact,
                 SeverityLevel, ResponseTime, MitigationStrategy, Company, Lat, Lng
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-             `,
+            `,
             [IncidentID, CompanyID, Country, Year, ThreatType,
                 AffectedIndustry, DataBreached, FinancialImpact,
                 SeverityLevel, ResponseTime, MitigationStrategy, Company, Lat, Lng]
