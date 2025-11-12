@@ -36,6 +36,6 @@ To run the database:
 3. Run server command: node database.js
 
 Inserting data:
-1. Run basic_database_creation.sql
-2. If errors, create table incidents first and company. Then create other tables.
+1. Run basic_database_creation.sql and create database PROJECT and create tables.
+2. If errors, create table incidents first and company next. Then create other tables.
 As of now, the data has to be manually imported from "NewGlobal_Cybersecurity_Threats_2015-2024.csv" file into the incidents table in MySQL Workbench.
