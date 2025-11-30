@@ -1,4 +1,4 @@
-/* Define all my colors and variables here */
+/* My color palette - dark theme vibes */
 :root {
   --bg: #0e1117;
   --panel: #151a23;
@@ -14,16 +14,17 @@
   --sev-low: #31c48d;
 }
 
-/* Basic reset */
+/* Resetting defaults so it looks the same everywhere */
 * {
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   height: 100%;
 }
 
-/* Main body styling */
+/* Setting up the main page look */
 body {
   margin: 0;
   background: var(--bg);
@@ -31,27 +32,28 @@ body {
   font: 15px/1.55 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Helvetica Neue, Arial;
 }
 
-/* Main container */
+/* The main container that holds everything */
 .wrap {
-  max-width: 1200px;
+  max-width: 1600px;
   margin: 0 auto;
   padding: 24px;
   animation: fadeUp .45s ease both;
 }
 
-/* Fade up animation when page loads */
+/* Cool fade in animation when page loads */
 @keyframes fadeUp {
   from {
     opacity: 0;
     transform: translateY(8px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-/* Header styling */
+/* Header area */
 header {
   display: flex;
   align-items: center;
@@ -66,7 +68,7 @@ h1.page-title {
   letter-spacing: .5px;
 }
 
-/* Cool gradient text effect for the title */
+/* Making the title glow with a gradient */
 .title-glow {
   background: linear-gradient(90deg, #61dafb, #a78bfa, #ec4899, #61dafb);
   background-size: 300% 300%;
@@ -77,15 +79,18 @@ h1.page-title {
 }
 
 @keyframes gradientShift {
-  0%, 100% {
+
+  0%,
+  100% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
 }
 
-/* Card style - used for all sections */
+/* The card style for all the boxes */
 .card {
   background: linear-gradient(180deg, var(--panel), var(--panel-2));
   border: 1px solid var(--border);
@@ -97,10 +102,11 @@ h1.page-title {
   padding: 16px;
 }
 
-/* Filter controls styling */
+/* Styling the filter inputs at the top */
 .filters {
   display: flex;
   align-items: flex-end;
+  justify-content: center;
   gap: 16px;
   flex-wrap: wrap;
 }
@@ -116,7 +122,7 @@ h1.page-title {
   font-size: 13px;
 }
 
-/* Input fields */
+/* Custom input styling */
 .input {
   background: #0f1420;
   color: var(--text);
@@ -133,7 +139,7 @@ h1.page-title {
   border-color: #2f3a4f;
 }
 
-/* Dropdown select styling with custom arrow */
+/* Dropdown styling with a custom arrow icon */
 .type-select {
   width: 200px;
   cursor: pointer;
@@ -144,7 +150,7 @@ h1.page-title {
   padding-right: 32px;
 }
 
-/* Date picker wrapper */
+/* Wrapper for the date picker */
 .date-wrapper {
   position: relative;
   display: flex;
@@ -156,7 +162,7 @@ h1.page-title {
   cursor: pointer;
 }
 
-/* Date buttons - hidden until user selects a date */
+/* Apply/Clear buttons for date picker */
 .btn-apply,
 .btn-clear {
   background: #0f1420;
@@ -198,7 +204,7 @@ h1.page-title {
   transform: scale(.95);
 }
 
-/* Regular button styling */
+/* General button styles */
 .btn {
   background: #0f1420;
   color: var(--text);
@@ -217,7 +223,34 @@ h1.page-title {
   transform: scale(.98);
 }
 
-/* Severity filter pills */
+.btn-primary {
+  background: #31c48d;
+  color: #000;
+  border-color: #31c48d;
+  font-weight: 600;
+}
+
+.btn-primary:hover {
+  filter: brightness(1.1);
+}
+
+.btn-cancel {
+  background: #6b7482;
+  color: #fff;
+  border-color: #6b7482;
+}
+
+.btn-delete {
+  background: #dc2626;
+  color: #fff;
+  border-color: #dc2626;
+}
+
+.btn-delete:hover {
+  filter: brightness(1.1);
+}
+
+/* The pills for filtering by severity */
 .sev-group {
   display: flex;
   gap: 8px;
@@ -237,12 +270,12 @@ h1.page-title {
   transition: filter .15s;
 }
 
-/* Hide the actual radio button */
+/* Hiding the actual radio button so I can style the label */
 .sev-pill input {
   display: none;
 }
 
-/* Different colors for each severity level */
+/* Colors for different severity levels */
 .sev-pill[data-sev="all"] {
   background: #0f1420;
   color: #cfd2db;
@@ -276,27 +309,28 @@ h1.page-title {
   filter: brightness(1.05);
 }
 
-/* Style the selected pill */
-.sev-pill input:checked + span {
+/* Make the selected pill look active */
+.sev-pill input:checked+span {
   font-weight: 700;
   text-decoration: underline;
 }
 
-/* Grid layout - map is bigger than charts */
+/* Grid layout to put map and charts side by side */
 .grid {
   display: grid;
-  grid-template-columns: 1.4fr 1fr;
+  grid-template-columns: 1fr;
   gap: 12px;
   margin-top: 12px;
   align-items: start;
 }
 
-/* Panel titles */
+/* Titles for each section */
 .panel-title-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   margin: 0 0 10px 0;
+  position: relative;
 }
 
 .panel-title {
@@ -304,6 +338,7 @@ h1.page-title {
   font-weight: 700;
   font-size: 14px;
   color: #d8dbe3;
+  text-align: center;
 }
 
 .centered-title {
@@ -311,30 +346,33 @@ h1.page-title {
   margin-bottom: 10px;
 }
 
-/* Reset button on map */
+/* The reset view button on the map */
 .map-btn-outside {
-  background: #0f1420;
-  border: 1px solid var(--border);
-  color: #dbe1ee;
-  padding: 6px 12px;
+  background: #ffffff;
+  border: 1px solid #cccccc;
+  color: #000000;
+  padding: 8px 16px;
   border-radius: 10px;
-  font-size: 12px;
+  font-size: 13px;
+  font-weight: 600;
   cursor: pointer;
   transition: filter .15s, transform .08s;
+  position: absolute;
+  right: 0;
 }
 
 .map-btn-outside:hover {
-  filter: brightness(1.1);
+  filter: brightness(0.95);
 }
 
 .map-btn-outside:active {
   transform: scale(.98);
 }
 
-/* Charts styling */
+/* Styling for the charts area */
 .charts {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 12px;
 }
 
@@ -348,7 +386,45 @@ h1.page-title {
 .chart-container {
   position: relative;
   width: 100%;
-  height: 240px;
+  height: 250px;
+}
+
+.chart-summary,
+#chartTimeTotal,
+#chartTypesSummary,
+#chartSeveritySummary {
+  text-align: center;
+  margin-top: 12px;
+  font-size: 14px;
+  font-weight: bold !important;
+}
+
+.chart-pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.chart-page-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.chart-page-btn:hover:not(:disabled) {
+  border-color: var(--text-primary);
+  color: var(--text-primary);
+}
+
+.chart-page-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 canvas {
@@ -364,34 +440,91 @@ canvas {
   color: var(--text);
 }
 
-/* Table styling */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 13px;
+/* Table styles */
+.table-wrapper {
+  overflow-x: auto;
   margin-top: 10px;
 }
 
-th, td {
-  border-bottom: 1px solid var(--border);
-  padding: 10px 8px;
+/* New table design to match the rest of the app */
+.recent-incidents-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin-top: 8px;
+}
+
+.recent-incidents-table th {
+  background: #1e2433;
+  color: #e8eaf1;
+  font-weight: 600;
+  padding: 16px;
   text-align: left;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
-th {
-  color: #cfd2db;
-  font-weight: 700;
+.recent-incidents-table td {
+  padding: 16px;
+  border-bottom: 1px solid rgba(37, 43, 58, 0.5);
+  vertical-align: middle;
 }
 
-tbody tr {
+.recent-incidents-table tbody tr {
   transition: background .12s;
 }
 
-tbody tr:hover {
-  background: #141a26;
+.recent-incidents-table tbody tr:hover {
+  background: rgba(25, 35, 50, 0.6);
 }
 
-/* Badges for severity levels in the table */
+.recent-incidents-table th.date-col,
+.recent-incidents-table td:first-child {
+  white-space: nowrap;
+  min-width: 120px;
+}
+
+.recent-incidents-table th.actions-col {
+  text-align: center;
+  width: 80px;
+}
+
+.recent-incidents-table td:last-child {
+  text-align: center;
+}
+
+/* The little info icon button in the table */
+.action-btn {
+  background: transparent;
+  border: none;
+  color: #31c48d;
+  padding: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: color .2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-btn:hover {
+  background: transparent;
+  color: #79e0b9;
+  transform: none;
+  box-shadow: none;
+}
+
+.action-btn:active {
+  transform: none;
+}
+
+.action-btn i {
+  font-size: 20px;
+}
+
+/* Badges inside the table */
 .badge {
   display: inline-block;
   padding: 3px 8px;
@@ -400,6 +533,7 @@ tbody tr:hover {
   border: 1px solid var(--border);
   background: #0f1420;
   color: #dfe3ec;
+  white-space: nowrap;
 }
 
 .sev-critical {
@@ -426,7 +560,45 @@ tbody tr:hover {
   border-color: rgba(49, 196, 141, .35);
 }
 
-/* 3D flip effect for the map detail view */
+/* Pagination buttons at the bottom */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  padding: 12px 0;
+}
+
+.page-btn {
+  background: #0f1420;
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: filter .15s;
+  min-width: 36px;
+}
+
+.page-btn:hover:not(:disabled) {
+  filter: brightness(1.2);
+}
+
+.page-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.page-btn.active {
+  background: #31c48d;
+  border-color: #31c48d;
+  color: #000;
+  font-weight: 600;
+}
+
+/* Cool 3D flip effect for the map card */
 .flip {
   position: relative;
   perspective: 1200px;
@@ -454,7 +626,7 @@ tbody tr:hover {
   transform: rotateY(180deg);
 }
 
-/* When flipped, show the back side */
+/* Flip logic */
 .flip.flipped .face.front {
   transform: rotateY(-180deg);
 }
@@ -463,7 +635,7 @@ tbody tr:hover {
   transform: rotateY(0deg);
 }
 
-/* Map styling */
+/* Map container */
 #map {
   width: 100%;
   height: 460px;
@@ -476,21 +648,77 @@ tbody tr:hover {
   margin: 0 auto;
 }
 
-/* Customize the map zoom buttons */
+/* Button to reset map zoom */
+.map-reset-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: #ffffff;
+  color: #000000;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  z-index: 100;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.map-reset-btn:hover {
+  background: #f0f0f0;
+}
+
+/* Overriding the map library's zoom button styles */
 .jsvectormap-zoomin,
-.jsvectormap-zoomout {
-  background: rgba(15, 20, 32, .9) !important;
-  border: 1px solid var(--border) !important;
-  color: #dbe1ee !important;
-  border-radius: 6px !important;
+.jsvectormap-zoomout,
+.jvectormap-zoomin,
+.jvectormap-zoomout,
+.jvm-zoom-btn,
+.jvm-zoomin,
+.jvm-zoomout,
+#map .jsvectormap-zoomin,
+#map .jsvectormap-zoomout,
+.jsvmap .jsvectormap-zoomin,
+.jsvmap .jsvectormap-zoomout,
+.jsvmap .jvm-zoom-btn {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  border: 1px solid #cccccc !important;
+  color: #000000 !important;
+  border-radius: 0 !important;
   cursor: pointer !important;
   font-weight: bold !important;
+  font-size: 16px !important;
+  width: 28px !important;
+  height: 28px !important;
+  margin: 12px !important;
+  margin: 12px !important;
   transition: filter .15s, transform .08s !important;
 }
 
+.jsvectormap-zoomin,
+.jvectormap-zoomin,
+.jvm-zoomin,
+#map .jsvectormap-zoomin,
+.jsvmap .jsvectormap-zoomin,
+.jsvmap .jvm-zoomin {
+  top: -2px !important;
+}
+
 .jsvectormap-zoomin:hover,
-.jsvectormap-zoomout:hover {
-  filter: brightness(1.3) !important;
+.jsvectormap-zoomout:hover,
+.jvectormap-zoomin:hover,
+.jvectormap-zoomout:hover,
+.jvm-zoom-btn:hover,
+.jvm-zoomin:hover,
+.jvm-zoomout:hover,
+#map .jsvectormap-zoomin:hover,
+#map .jsvectormap-zoomout:hover {
+  filter: brightness(0.95) !important;
+  background: #ffffff !important;
+  background-color: #ffffff !important;
 }
 
 .jsvectormap-zoomin:active,
@@ -498,7 +726,7 @@ tbody tr:hover {
   transform: scale(.95) !important;
 }
 
-/* Remove default animations from map markers */
+/* Stop markers from animating weirdly */
 #map svg circle {
   transition: none !important;
   filter: none !important;
@@ -510,7 +738,21 @@ tbody tr:hover {
   animation: none !important;
 }
 
-/* Detail panel on the back of the flip card */
+/* Styling the map tooltip */
+.jsvectormap-tooltip,
+.jvm-tooltip,
+.jvectormap-tooltip {
+  background: #000000 !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 8px !important;
+  padding: 8px 12px !important;
+  color: var(--text) !important;
+  font-size: 12px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+  opacity: 1 !important;
+}
+
+/* The back side of the map card */
 .detail-close {
   position: absolute;
   right: 12px;
@@ -534,9 +776,271 @@ tbody tr:hover {
   margin: 0 0 6px 0;
 }
 
+/* The info card that pops up on hover */
+.map-info-card {
+  margin-top: 12px;
+  background: #0f1420;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  min-height: 180px;
+  max-height: 500px;
+  overflow-y: auto;
+  transition: all 0.3s ease;
+}
+
+.map-info-card.pinned {
+  border-color: #61dafb;
+  box-shadow: 0 0 0 2px rgba(97, 218, 251, 0.2);
+}
+
+.info-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.info-card-header h4 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  text-align: center;
+  flex: 1;
+}
+
+.info-card-close {
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  font-size: 20px;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  display: none;
+  transition: color 0.2s;
+}
+
+.info-card-close:hover {
+  color: var(--text);
+}
+
+.map-info-card.pinned .info-card-close {
+  display: block;
+}
+
+.info-card-content {
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.info-hint {
+  color: var(--muted);
+  font-style: italic;
+  margin: 0;
+  text-align: center;
+}
+
+.info-card-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px 12px;
+  margin-top: 8px;
+}
+
+.info-card-grid .label {
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.info-card-grid .value {
+  color: var(--text);
+}
+
+/* Info table styling */
+.info-table-wrapper {
+  overflow-x: auto;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.info-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  margin-top: 8px;
+}
+
+.info-table th {
+  background: #1e2433;
+  color: #e8eaf1;
+  font-weight: 600;
+  padding: 8px 6px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.info-table td {
+  padding: 6px;
+  border-bottom: 1px solid rgba(37, 43, 58, 0.5);
+  color: var(--text);
+}
+
+.info-table tbody tr:hover {
+  background: rgba(25, 35, 50, 0.4);
+}
+
+/* Modal Styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  animation: fadeIn 0.2s ease;
+}
+
+.modal.show {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.modal-content {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  width: 90%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 20px;
+  color: var(--text);
+  flex: 1;
+  text-align: center;
+}
+
+.modal-close {
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  font-size: 28px;
+  cursor: pointer;
+  line-height: 1;
+  transition: color .2s;
+}
+
+.modal-close:hover {
+  color: var(--text);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  padding: 24px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.form-group input,
+.form-group select {
+  background: #0f1420;
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color .2s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #31c48d;
+  box-shadow: 0 0 0 3px rgba(49, 196, 141, 0.1);
+}
+
+/* Dropdown select styling with custom arrow */
+.form-group select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23a8acb7' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 32px;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 20px 24px;
+  border-top: 1px solid var(--border);
+}
+
 /* Mobile responsive - make everything stack vertically */
 @media (max-width: 980px) {
   .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .charts {
     grid-template-columns: 1fr;
   }
 
@@ -572,4 +1076,139 @@ tbody tr:hover {
   .map-btn-outside {
     align-self: flex-start;
   }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-content {
+    width: 95%;
+    max-height: 95vh;
+  }
+
+  .incidents-table {
+    min-width: auto;
+  }
+}
+
+/* Utility classes to replace inline styles */
+.mt-sm {
+  margin-top: 12px;
+}
+
+.mb-sm {
+  margin-bottom: 12px;
+}
+
+.mr-auto {
+  margin-right: auto;
+}
+
+.opt-critical {
+  color: #ff5555;
+}
+
+.opt-high {
+  color: #ff7777;
+}
+
+.opt-medium {
+  color: #ffbf7a;
+}
+
+.opt-low {
+  color: #79e0b9;
+}
+
+/* Flatpickr Dark Theme Overrides */
+.flatpickr-calendar {
+  background: #0f1420 !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: var(--shadow) !important;
+  color: var(--text) !important;
+}
+
+.flatpickr-month {
+  background: #0f1420 !important;
+  color: var(--text) !important;
+  fill: var(--text) !important;
+}
+
+.flatpickr-current-month .flatpickr-monthDropdown-months {
+  background: #0f1420 !important;
+  color: var(--text) !important;
+}
+
+.flatpickr-current-month .flatpickr-monthDropdown-months:hover {
+  background: #0f1420 !important;
+}
+
+.flatpickr-weekdays {
+  background: #0f1420 !important;
+}
+
+.flatpickr-weekday {
+  background: #0f1420 !important;
+  color: var(--muted) !important;
+}
+
+.flatpickr-day {
+  color: var(--text) !important;
+}
+
+.flatpickr-day.flatpickr-disabled,
+.flatpickr-day.flatpickr-disabled:hover {
+  color: var(--muted) !important;
+}
+
+.flatpickr-day:hover,
+.flatpickr-day.prevMonthDay:hover,
+.flatpickr-day.nextMonthDay:hover,
+.flatpickr-day:focus {
+  background: rgba(97, 218, 251, 0.1) !important;
+  border-color: transparent !important;
+}
+
+.flatpickr-day.selected,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange,
+.flatpickr-day.selected.inRange,
+.flatpickr-day.startRange.inRange,
+.flatpickr-day.endRange.inRange,
+.flatpickr-day.selected:focus,
+.flatpickr-day.startRange:focus,
+.flatpickr-day.endRange:focus,
+.flatpickr-day.selected:hover,
+.flatpickr-day.startRange:hover,
+.flatpickr-day.endRange:hover,
+.flatpickr-day.selected.prevMonthDay,
+.flatpickr-day.startRange.prevMonthDay,
+.flatpickr-day.endRange.prevMonthDay,
+.flatpickr-day.selected.nextMonthDay,
+.flatpickr-day.startRange.nextMonthDay,
+.flatpickr-day.endRange.nextMonthDay {
+  background: #61dafb !important;
+  border-color: #61dafb !important;
+  color: #000 !important;
+}
+
+.flatpickr-day.inRange {
+  background: rgba(97, 218, 251, 0.1) !important;
+  border-color: transparent !important;
+  box-shadow: -5px 0 0 rgba(97, 218, 251, 0.1), 5px 0 0 rgba(97, 218, 251, 0.1) !important;
+}
+
+/* Custom Date Input Icon */
+#incidentDate {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'%3E%3C/rect%3E%3Cline x1='16' y1='2' x2='16' y2='6'%3E%3C/line%3E%3Cline x1='8' y1='2' x2='8' y2='6'%3E%3C/line%3E%3Cline x1='3' y1='10' x2='21' y2='10'%3E%3C/line%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+  cursor: pointer;
+}
+
+/* Hide native calendar picker indicator in WebKit */
+#incidentDate::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
 }

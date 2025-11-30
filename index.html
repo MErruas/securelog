@@ -1,48 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <title>Incident Tracker Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Flatpickr - for the date picker -->
+  <!-- Using Font Awesome for the icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Flatpickr - using this for the date picker input -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css">
 
-  <!-- Chart.js - for making the charts -->
+  <!-- Chart.js library to make the cool charts -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
-  <!-- jsVectorMap - for the world map -->
+  <!-- jsVectorMap - this is for the world map display -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/css/jsvectormap.min.css">
   <script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/js/jsvectormap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/maps/world-merc.js"></script>
 
-  <!-- My styles -->
+  <!-- Linking my own CSS file here -->
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
   <div class="wrap">
-    
-    <!-- Title at the top -->
+
+    <!-- The main title of the dashboard -->
     <header>
       <h1 class="page-title"><span class="title-glow">Incident Tracker Dashboard</span></h1>
     </header>
 
-    <!-- Filter section - where users can filter the data -->
+    <!-- Filter section - this is where users can filter the data -->
     <section class="card section">
       <div class="filters">
-        
-        <!-- Date range picker -->
+
+        <!-- Date range picker input -->
         <div class="filter-control">
           <label for="dateRange" class="subtitle">Date range</label>
           <div class="date-wrapper">
             <input id="dateRange" class="input" placeholder="Select date range" readonly />
-            <button id="dateApply" class="btn-apply" title="Apply dates">See Results</button>
-            <button id="dateClear" class="btn-clear" title="Clear dates">×</button>
           </div>
         </div>
 
-        <!-- Dropdown to select incident type -->
+        <!-- Dropdown menu to select incident type -->
         <div class="filter-control">
           <label for="incidentType" class="subtitle">Incident Type</label>
           <select id="incidentType" class="input type-select">
@@ -51,11 +54,12 @@
             <option value="Malware">Malware</option>
             <option value="DDoS">DDoS</option>
             <option value="Ransomware">Ransomware</option>
-            <option value="Insider">Insider Threat</option>
+            <option value="SQL Injection">SQL Injection</option>
+            <option value="Man-in-the-Middle">Man-in-the-Middle</option>
           </select>
         </div>
 
-        <!-- Radio buttons for severity levels -->
+        <!-- Radio buttons to choose severity levels -->
         <div class="filter-control">
           <span class="subtitle">Severity</span>
           <div id="severityRadios" class="sev-group" role="radiogroup" aria-label="Severity">
@@ -77,90 +81,214 @@
           </div>
         </div>
 
-        <!-- Reset button to clear all filters -->
+        <!-- Button to reset all the filters back to default -->
         <div class="filter-control">
           <label class="subtitle">&nbsp;</label>
           <button id="resetBtn" class="btn">Reset filters</button>
         </div>
+
+        <!-- Button to add a new incident -->
+        <div class="filter-control">
+          <label class="subtitle">&nbsp;</label>
+          <button id="addIncidentBtn" class="btn btn-primary">+ Add Incident</button>
+        </div>
       </div>
     </section>
 
-    <!-- Main grid - map on left, charts on right -->
+    <!-- Main grid layout - map on the left, charts on the right -->
     <div class="grid">
-      
-      <!-- World map section -->
+
+      <!-- The world map section -->
       <section class="card section">
         <div class="panel-title-row">
-          <h3 class="panel-title">Incidents by Location</h3>
-          <button id="resetView" class="map-btn-outside" title="Reset view">Reset view</button>
+          <h3 class="panel-title" id="mapPanelTitle">Incidents by Location</h3>
         </div>
 
-        <!-- The map has a flip effect - front shows map, back shows details -->
+        <!-- The map has a flip effect - front shows map, back shows details when clicked -->
         <div id="mapFlip" class="flip">
-          <!-- Front side - the actual map -->
+          <!-- Front side - this is the actual map -->
           <div class="face front">
             <div id="map"></div>
+            <button id="resetView" class="map-reset-btn" title="Reset view">Reset View</button>
           </div>
 
-          <!-- Back side - shows when you click on a marker or country -->
+          <!-- Back side - this shows up when you click on a marker or country -->
           <div class="face back">
             <button id="detailClose" class="detail-close" aria-label="Close details">×</button>
             <div id="detailPanel"></div>
           </div>
         </div>
+
+        <!-- Info card that pops up on hover/click -->
+        <div id="mapInfoCard" class="map-info-card">
+          <div class="info-card-header">
+            <h4 id="infoCardTitle">Hover over a marker</h4>
+            <button id="infoCardClose" class="info-card-close">×</button>
+          </div>
+          <div id="infoCardContent" class="info-card-content">
+            <p class="info-hint">Hover over a marker to see incident details</p>
+          </div>
+        </div>
       </section>
 
-      <!-- Charts column on the right -->
+      <!-- Charts column on the right side -->
       <div class="charts">
-        
-        <!-- Chart 1: Line chart showing incidents over time -->
+
+        <!-- Chart 1: Line chart for incidents over time -->
         <section class="card chart-card">
-          <h3 class="panel-title">Incidents Over Time</h3>
+          <h3 class="panel-title mb-sm">Incidents Over Time</h3>
           <div class="chart-container"><canvas id="chartTime"></canvas></div>
-          <div class="chart-total" id="chartTimeTotal">Total: 0</div>
+          <div class="chart-summary" id="chartTimeTotal">Total: 0</div>
+          <div class="chart-pagination" id="chartTimePagination"></div>
         </section>
 
-        <!-- Chart 2: Bar chart showing different incident types -->
+        <!-- Chart 2: Bar chart for different incident types -->
         <section class="card chart-card">
-          <h3 class="panel-title">Incident Types</h3>
+          <h3 class="panel-title mb-sm">Incident Types</h3>
           <div class="chart-container"><canvas id="chartTypes"></canvas></div>
+          <div class="chart-summary" id="chartTypesSummary"></div>
+          <div class="chart-pagination" id="chartTypesPagination"></div>
         </section>
 
-        <!-- Chart 3: Doughnut chart showing severity breakdown -->
         <section class="card chart-card">
-          <h3 class="panel-title">Incidents by Severity</h3>
+          <h3 class="panel-title mb-sm">Incidents by Severity</h3>
           <div class="chart-container"><canvas id="chartSeverity"></canvas></div>
+          <div class="chart-summary" id="chartSeveritySummary"></div>
         </section>
       </div>
     </div>
 
-    <!-- Data table at the bottom -->
-    <section class="card section" style="margin-top:12px;">
+    <!-- The big data table at the bottom -->
+    <section class="card section mt-sm">
       <h3 class="panel-title centered-title">Recent Incidents</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Type</th>
-            <th>Severity</th>
-            <th>Organization</th>
-            <th>Country</th>
-            <th>Response Time</th>
-            <th>Data Breached</th>
-            <th>Mitigation Strategy</th>
-            <th>Affected Industry</th>
-            <th>Financial Impact</th>
-          </tr>
-        </thead>
-        <tbody id="tableBody"></tbody>
-      </table>
+      <div class="table-wrapper">
+        <table class="recent-incidents-table">
+          <thead>
+            <tr>
+              <th class="date-col"><strong>Date</strong></th>
+              <th><strong>Type</strong></th>
+              <th><strong>Severity</strong></th>
+              <th><strong>Organization</strong></th>
+              <th><strong>Country</strong></th>
+              <th><strong>Response Time</strong></th>
+              <th><strong>Data Breached</strong></th>
+              <th><strong>Mitigation Strategy</strong></th>
+              <th><strong>Affected Industry</strong></th>
+              <th><strong>Financial Impact</strong></th>
+              <th class="actions-col"><strong>Actions</strong></th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+      <!-- Pagination buttons -->
+      <div class="pagination" id="pagination"></div>
     </section>
   </div>
 
-  <!-- Load the libraries -->
+  <!-- Modal for Adding or Editing an Incident -->
+  <div id="incidentModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modalTitle">Add New Incident</h2>
+        <button class="modal-close" id="modalClose">&times;</button>
+      </div>
+      <form id="incidentForm">
+        <input type="hidden" id="incidentId" />
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="incidentDate">Date *</label>
+            <input type="date" id="incidentDate" required />
+          </div>
+
+          <div class="form-group">
+            <label for="incidentType2">Type *</label>
+            <select id="incidentType2" required>
+              <option value="">Select Type</option>
+              <option value="Phishing">Phishing</option>
+              <option value="Malware">Malware</option>
+              <option value="DDoS">DDoS</option>
+              <option value="Ransomware">Ransomware</option>
+              <option value="SQL Injection">SQL Injection</option>
+              <option value="Man-in-the-Middle">Man-in-the-Middle</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="incidentSeverity">Severity *</label>
+            <select id="incidentSeverity" required class="severity-select">
+              <option value="">Select Severity</option>
+              <option value="Critical" class="opt-critical">Critical</option>
+              <option value="High" class="opt-high">High</option>
+              <option value="Medium" class="opt-medium">Medium</option>
+              <option value="Low" class="opt-low">Low</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="incidentOrg">Organization *</label>
+            <input type="text" id="incidentOrg" placeholder="Acme Corporation" required />
+          </div>
+
+          <div class="form-group">
+            <label for="incidentCountry">Country *</label>
+            <select id="incidentCountry" required>
+              <option value="">Select Country</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="incidentResponseTime">Response Time</label>
+            <input type="text" id="incidentResponseTime" placeholder="2 hours" />
+          </div>
+
+          <div class="form-group">
+            <label for="incidentDataBreached">Data Breached</label>
+            <input type="text" id="incidentDataBreached" placeholder="5,000 records" />
+          </div>
+
+          <div class="form-group">
+            <label for="incidentMitigation">Mitigation Strategy</label>
+            <input type="text" id="incidentMitigation" placeholder="Password reset" />
+          </div>
+
+          <div class="form-group">
+            <label for="incidentIndustry">Affected Industry</label>
+            <input type="text" id="incidentIndustry" placeholder="Healthcare" />
+          </div>
+
+          <div class="form-group">
+            <label for="incidentFinancial">Financial Impact</label>
+            <input type="text" id="incidentFinancial" placeholder="$50,000" />
+          </div>
+
+          <div class="form-group">
+            <label for="incidentLat">Latitude (optional)</label>
+            <input type="number" step="0.000001" id="incidentLat" placeholder="37.7749" />
+          </div>
+
+          <div class="form-group">
+            <label for="incidentLng">Longitude (optional)</label>
+            <input type="number" step="0.000001" id="incidentLng" placeholder="-122.4194" />
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-delete mr-auto" id="deleteIncidentBtn">Delete
+            Incident</button>
+          <button type="button" class="btn btn-cancel" id="cancelBtn">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Incident</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Loading the libraries -->
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-  
+
   <!-- My JavaScript code -->
   <script src="main.js"></script>
 </body>
+
 </html>
