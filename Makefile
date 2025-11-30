@@ -22,7 +22,6 @@ help:
 # Installing all the node modules we need
 install:
 	@printf "\033[0;34mInstalling dependencies...\033[0m\n"
-	@cd "$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))" && \
 	if [ ! -f package.json ]; then \
 		printf "\033[1;33mNo package.json found. Creating minimal package.json...\033[0m\n"; \
 		echo '{"name":"securelog","version":"1.0.0","main":"server-database.js","scripts":{"start":"node server-database.js"},"dependencies":{"express":"^4.18.2","mysql2":"^3.6.0","cors":"^2.8.5"}}' > package.json; \
