@@ -1,11 +1,20 @@
+<div align="center">
+
 # No Phishy Business
-Database Management Project
+
+### Database Management Project
+
+</div>
+
+---
 
 ## Introduction
 
 This database is designed to store information about incident data with a dashboard. This information contains many details, such as timestamps, type of attacks, severity levels, affected organizations, and geographic locations. Using the data within the database, we can analyze trends and patterns in cyber threats, helping companies calculate risk and minimize the likelihood of attacks.
 
-## The Security Problem
+---
+
+## ⚠️ The Security Problem
 
 Cyber attacks are becoming more common and sophisticated, and companies, organizations, and even individuals are struggling to deal with threats and notice vulnerabilities in their systems.
 
@@ -13,22 +22,26 @@ In 2024, there were significant increases in cyberattacks and their costs. In Q3
 
 <img width="965" height="871" alt="Cyber Attack Statistics" src="https://github.com/user-attachments/assets/f49bb0b7-a445-466b-a3e6-91527ebd977b" />
 
+---
+
 ## Features
 
-- Interactive world map with incident locations
-- Real-time charts and analytics
-- Advanced filtering by date, type, and severity
-- Add, edit, and delete incidents
-- Responsive design
-- Dynamic data updates
+* Interactive world map with incident locations
+* Real-time charts and analytics
+* Advanced filtering by date, type, and severity
+* Add, edit, and delete incidents
+* Responsive design
+* Dynamic data updates
 
-## Prerequisites
+---
+
+## Requirements
 
 Before running this project, you need to have the following installed:
 
-- **Node.js**
-- **MySQL**
-- **Make** (see installation instructions below)
+* **Node.js**
+* **MySQL**
+* **Make** (see installation instructions below)
 
 ### Installing Make
 
@@ -52,31 +65,43 @@ brew install make
 
 #### Windows
 
-**Using Chocolatey** (Recommended)
+**Step 1: Use Git Bash (Easiest - Recommended)**
 
-1. Install Chocolatey (if you don't have it already):
-   - Open PowerShell as Administrator
-   - Run:
+If you have Git installed (most developers do), you already have Git Bash!
+
+1. Open VS Code
+2. Open the terminal (`` Ctrl+` `` or View → Terminal)
+3. Click the dropdown arrow next to the `+` button in the terminal
+4. Select **"Git Bash"**
+5. Set it as default: Click dropdown → "Select Default Profile" → "Git Bash"
+
+Done! Now you can run all `make` commands. Skip to the Installation section below.
+
+**Step 2: Install Make with Chocolatey** (If you prefer)
+
+1. Open PowerShell as **Administrator** (right-click → "Run as Administrator")
+
+2. Copy and paste this command to install Chocolatey:
 
 ```powershell
 Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 ```
 
-   - Close and reopen PowerShell as Administrator
+3. Close and reopen PowerShell as Administrator
 
-2. Install Make:
+4. Install Make:
 
 ```powershell
 choco install make
 ```
 
-**Alternative: Using WSL (Windows Subsystem for Linux)**
+5. **Important:** Restart VS Code completely for the changes to take effect
 
-```powershell
-wsl --install
-```
+**If you get errors:**
 
-Then restart your computer and open Ubuntu - `make` will already be available.
+* **Error: "make: command not found"** → Use Git Bash instead (Step 1 above)
+* **Error: "CreateProcess" or "printf not found"** → Use Git Bash instead
+* Still having issues? See Windows Alternative Setup below
 
 ### Verify Installation
 
@@ -84,41 +109,82 @@ Then restart your computer and open Ubuntu - `make` will already be available.
 make --version
 ```
 
+---
+
 ## Installation
 
-1. Clone the repository:
+Clone the repository:
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/MErruas/securelog.git
 cd securelog
 ```
 
-2. Install dependencies:
-
-```bash
-npm install
-```
-
-3. Set up the MySQL database:
-
-```bash
-make setup-db
-```
-
-Follow the prompts to enter your MySQL password and configure the database. The setup will automatically:
-- Create the database schema
-- Import all incident data
-- Configure the connection
+---
 
 ## Running the Project
 
-Start the server using Make:
+**Recommended: One Command Does Everything**
+
+Run this single command to install dependencies, set up the database, and start the server:
 
 ```bash
 make run
 ```
 
-Or using Node directly:
+You'll be prompted to enter your MySQL password. The command automatically:
+* Installs all dependencies
+* Creates the database schema
+* Imports all incident data
+* Starts the server
+
+The application will be available at `http://localhost:3000`
+
+---
+
+**Alternative Options:**
+
+If you need to restart the server later (after initial setup):
+
+```bash
+node server-database.js
+```
+
+If `make` doesn't work on your system:
+
+```bash
+npm install
+node server-database.js
+```
+
+> **Note:** You'll need to set up the database manually first (see Windows Alternative Setup below)
+
+---
+
+## Windows Alternative Setup
+
+If the Makefile doesn't work and you don't want to use Git Bash, follow these manual steps:
+
+**1. Install dependencies:**
+
+```bash
+npm install
+```
+
+**2. Setup the database manually:**
+
+Open MySQL Workbench or MySQL command line and run these SQL files **in order**:
+
+```bash
+mysql -u root -p < data_files/basic_database_creation.sql
+mysql -u root -p project < data_files/all_incidents_data.sql
+```
+
+Or in MySQL Workbench:
+* First run: `data_files/basic_database_creation.sql`
+* Then run: `data_files/all_incidents_data.sql`
+
+**3. Start the server:**
 
 ```bash
 node server-database.js
@@ -126,38 +192,7 @@ node server-database.js
 
 The application will be available at `http://localhost:3000`
 
-## Usage
-
-### Adding an Incident
-
-1. Click the **"+ Add Incident"** button
-2. Fill in the required fields:
-   - **Date**: Select the incident date
-   - **Type**: Choose the incident type (Phishing, Malware, DDoS, Ransomware, SQL Injection, Man-in-the-Middle)
-   - **Severity**: Select severity level (Critical, High, Medium, Low)
-   - **Organization**: Enter the affected organization name
-   - **Country**: Select the country from the dropdown
-
-3. Optional fields (use the format shown in placeholders):
-   - **Response Time**: e.g., `2 hours`, `24 hours`
-   - **Data Breached**: e.g., `5,000 records`, `1.2M records`
-   - **Mitigation Strategy**: e.g., `VPN`, `Firewall`, `AI-based Detection`
-   - **Affected Industry**: e.g., `Healthcare`, `Finance`, `Education`
-   - **Financial Impact**: e.g., `$50,000`, `$2.5M`
-   - **Latitude/Longitude**: Optional coordinates (auto-filled based on country if left empty)
-
-### Filtering Data
-
-- **Date Range**: Click the date range picker to filter by time period
-- **Incident Type**: Use the dropdown to filter by specific threat types
-- **Severity**: Click the severity pills to filter by severity level
-- **Reset**: Click "Reset filters" to clear all filters and show all data
-
-### Viewing Incident Details
-
-- **Map View**: Hover over markers on the map to see incident summaries, click to view full details
-- **Table View**: Click the info icon (ℹ️) in the Actions column to edit or delete incidents
-- **Charts**: View trends over time, incident type distribution, and severity breakdown
+---
 
 ## Project Structure
 
@@ -172,55 +207,25 @@ securelog/
 └── data_files/                # SQL database setup files
     ├── basic_database_creation.sql
     ├── all_incidents_data.sql
-    ├── incident_type_data.sql
-    └── severity_levels_data.sql
+    └── incident_type_data.sql
 ```
+
+---
 
 ## Database Schema
 
 The database uses the following main table structure:
 
 **INCIDENT Table:**
-- `IncidentID` (Primary Key)
-- `Date`
-- `ThreatType`
-- `SeverityLevel`
-- `Company`
-- `Country`
-- `Latitude`, `Longitude`
-- `ResponseTime`
-- `DataBreached`
-- `MitigationStrategy`
-- `AffectedIndustry`
-- `FinancialImpact`
-
-## Technologies Used
-
-- **Frontend**: HTML5, CSS3, JavaScript (ES6+)
-- **Charts**: Chart.js
-- **Maps**: jsVectorMap
-- **Date Picker**: Flatpickr
-- **Icons**: Font Awesome
-- **Backend**: Node.js, Express.js
-- **Database**: MySQL
-
-## API Endpoints
-
-The server provides the following REST API endpoints:
-
-- `GET /api/incidents` - Retrieve all incidents
-- `POST /api/incidents` - Create a new incident
-- `PUT /api/incidents/:id` - Update an existing incident
-- `DELETE /api/incidents/:id` - Delete an incident
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## License
-
-MIT
+* `IncidentID` (Primary Key)
+* `Date`
+* `ThreatType`
+* `SeverityLevel`
+* `Company`
+* `Country`
+* `Latitude`, `Longitude`
+* `ResponseTime`
+* `DataBreached`
+* `MitigationStrategy`
+* `AffectedIndustry`
+* `FinancialImpact`
