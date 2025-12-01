@@ -194,24 +194,6 @@ The application will be available at `http://localhost:3000`
 
 ---
 
-## Project Structure
-
-```
-securelog/
-├── index.html                 # Main dashboard interface
-├── main.js                    # Frontend logic and data visualization
-├── style.css                  # Styling and layout
-├── server-database.js         # Backend API server
-├── package.json               # Node.js dependencies
-├── Makefile                   # Build and setup automation
-└── data_files/                # SQL database setup files
-    ├── basic_database_creation.sql
-    ├── all_incidents_data.sql
-    └── incident_type_data.sql
-```
-
----
-
 ## Database Schema
 
 The database uses the following main table structure:
